@@ -1,0 +1,4 @@
+{
+  "status": 404,
+  "response": "{\"statusCode\":404,\"success\":false,\"message\":\"User does not Exists\",\"errors\":[]}"
+}

@@ -23,8 +23,8 @@ export default defineConfig({
      */
     //timeout: 7000
   },
-  globalSetup: './utils/global-setup.js',
-  globalTeardown: './utils/global-teardown.js',
+  // globalSetup: './utils/global-setup.js',
+  // globalTeardown: './utils/global-teardown.js',
   /* Run tests in files in parallel */
   fullyParallel: false,
   //workers: 1,
