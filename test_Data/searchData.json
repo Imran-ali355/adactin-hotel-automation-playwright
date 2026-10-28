@@ -1,0 +1,37 @@
+{
+  "validSearches": [
+    {
+      "location": "Sydney",
+      "hotels": "Hotel Creek",
+      "roomType": "Standard",
+      "roomNos": "1 - One",
+      "dateIn": "28/10/2026",
+      "dateOut": "31/10/2026",
+      "adults": "2 - Two",
+      "children": "1 - One"
+    },
+    {
+      "location": "Melbourne",
+      "hotels": "Hotel Sunshine",
+      "roomType": "Deluxe",
+      "roomNos": "2 - Two",
+      "dateIn": "10/11/2026",
+      "dateOut": "15/11/2026",
+      "adults": "1 - One",
+      "children": "0 - None"
+    }
+  ],
+  "invalidSearches": [
+    {
+      "location": "Sydney",
+      "hotels": "Hotel Creek",
+      "roomType": "Standard",
+      "roomNos": "1 - One",
+      "dateIn": "28/10/2026",
+      "dateOut": "25/10/2026", 
+      "adults": "1 - One",
+      "children": "0 - None",
+      "errorMsg": "Check-In Date shall be before than Check-Out Date"
+    }
+  ]
+}

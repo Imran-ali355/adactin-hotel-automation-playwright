@@ -1,0 +1,14 @@
+{
+  "booking": [
+    {
+      "firstname": "John",
+      "lastname": "Doe",
+      "billingaddress": "123 Main St, Sydney",
+      "creditcardnumber": "4111111111111111",
+      "creditcardtype": "VISA",
+      "expirydate": "August/2027",
+      "cvv": "123",
+      "expectedConfirmURL": "BookingConfirm.php"
+    }
+  ]
+}

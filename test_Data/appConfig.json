@@ -1,0 +1,11 @@
+{
+  "urls": {
+    "expectedSearchURL": "SearchHotel.php",
+    "expectedSelectURL": "SelectHotel.php",
+    "expectedBookURL": "BookHotel.php",
+    "expectedConfirmURL": "BookingConfirm.php",
+    "expectedItineraryURL": "BookedItinerary.php",
+    "expectedLogoutURL": "Logout.php",
+    "expectedindexURL": "index.php"
+  }
+}

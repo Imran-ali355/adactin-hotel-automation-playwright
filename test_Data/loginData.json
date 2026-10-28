@@ -1,0 +1,25 @@
+{
+  "validation": {
+    "usernameRequired": "Enter Username",
+    "passwordRequired": "Enter Password",
+    "invalidCredentials": "Invalid Login details"
+  },
+  "navigation": {
+    "forgotPasswordURL": "ForgotPassword.php",
+    "registerURL": "Register.php"
+  },
+  "invalid": [
+    {
+      "username": "WrongUser_999",
+      "password": "correct_password_here"
+    },
+    {
+      "username": "ImranAli355",
+      "password": "WrongPassword123!"
+    },
+    {
+      "username": "' OR '1'='1",
+      "password": "' OR '1'='1"
+    }
+  ]
+}

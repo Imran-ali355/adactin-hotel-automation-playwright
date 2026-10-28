@@ -1,0 +1,65 @@
+{
+  "cookies": [
+    {
+      "name": "__utmc",
+      "value": "163644015",
+      "domain": ".adactinhotelapp.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__utmz",
+      "value": "163644015.1791960479.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)",
+      "domain": ".adactinhotelapp.com",
+      "path": "/",
+      "expires": 1808951138,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "PHPSESSID",
+      "value": "761bd969320d9842c93a5ae9a8fa3d0d",
+      "domain": "adactinhotelapp.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__utma",
+      "value": "163644015.745270555.1791960479.1792043326.1793183138.6",
+      "domain": ".adactinhotelapp.com",
+      "path": "/",
+      "expires": 1827743138.434933,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__utmt",
+      "value": "1",
+      "domain": ".adactinhotelapp.com",
+      "path": "/",
+      "expires": 1793183737,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__utmb",
+      "value": "163644015.2.10.1793183138",
+      "domain": ".adactinhotelapp.com",
+      "path": "/",
+      "expires": 1793184938,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}
