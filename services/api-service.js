@@ -8,12 +8,12 @@ export class ApiService {
 
   get(path, options = {}) {
     return this.request.get(`${API_BASE_URL}${path}`, options);
-    //headers ya params dene hon). Agar options na diye jayein toh default mein ek khali object {} ban jata hai.
+    
   }
 
   post(path, data, options = {}) {
     return this.request.post(`${API_BASE_URL}${path}`, { ...options, data });
-    //Yeh ek object hai jo server ko bheja jata hai
+    
   }
 
   put(path, data, options = {}) {
