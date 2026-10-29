@@ -16,10 +16,7 @@ for (const variable of ['BASE_URL', 'USERNAME', 'PASSWORD']) {
 export default defineConfig({
   testDir: './tests',
 timeout: 60000, // 60 seconds per test
-use: {
-  actionTimeout: 15000, // 15 seconds for clicks/inputs
-  navigationTimeout: 30000,
-},
+
   // globalSetup: './utils/global-setup.js',
   // globalTeardown: './utils/global-teardown.js',
   /* Run tests in files in parallel */
@@ -43,6 +40,8 @@ use: {
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     storageState: './auth.json',
+    actionTimeout: 15000, // 15 seconds for clicks/inputs
+  navigationTimeout: 30000,
 
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: process.env.BASE_URL,
