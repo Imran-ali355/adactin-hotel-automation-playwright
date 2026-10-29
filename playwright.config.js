@@ -15,14 +15,11 @@ for (const variable of ['BASE_URL', 'USERNAME', 'PASSWORD']) {
  */
 export default defineConfig({
   testDir: './tests',
-  timeout: 100 * 1000,
-  expect: {
-    /**
-     * Maximum time expect() should wait for the condition to be met.
-     * For example in `await expect(locator).toHaveText();`
-     */
-    //timeout: 7000
-  },
+timeout: 60000, // 60 seconds per test
+use: {
+  actionTimeout: 15000, // 15 seconds for clicks/inputs
+  navigationTimeout: 30000,
+},
   // globalSetup: './utils/global-setup.js',
   // globalTeardown: './utils/global-teardown.js',
   /* Run tests in files in parallel */
