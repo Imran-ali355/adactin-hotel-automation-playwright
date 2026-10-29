@@ -1,6 +1,26 @@
 {
   "cookies": [
     {
+      "name": "__utmc",
+      "value": "163644015",
+      "domain": ".adactinhotelapp.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__utmz",
+      "value": "163644015.1791960479.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)",
+      "domain": ".adactinhotelapp.com",
+      "path": "/",
+      "expires": 1807811328,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
       "name": "PHPSESSID",
       "value": "761bd969320d9842c93a5ae9a8fa3d0d",
       "domain": "adactinhotelapp.com",
@@ -12,53 +32,13 @@
     },
     {
       "name": "__utma",
-      "value": "163644015.745270555.1791960479.1792043326.1793256152.6",
+      "value": "163644015.745270555.1791960479.1791981582.1792043326.5",
       "domain": ".adactinhotelapp.com",
       "path": "/",
-      "expires": 1827816152.165,
+      "expires": 1826603328.307,
       "httpOnly": false,
       "secure": false,
-      "sameSite": "None"
-    },
-    {
-      "name": "__utmc",
-      "value": "163644015",
-      "domain": ".adactinhotelapp.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "None"
-    },
-    {
-      "name": "__utmz",
-      "value": "163644015.1791960479.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)",
-      "domain": ".adactinhotelapp.com",
-      "path": "/",
-      "expires": 1809024152,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "None"
-    },
-    {
-      "name": "__utmt",
-      "value": "1",
-      "domain": ".adactinhotelapp.com",
-      "path": "/",
-      "expires": 1793256752,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "None"
-    },
-    {
-      "name": "__utmb",
-      "value": "163644015.1.10.1793256152",
-      "domain": ".adactinhotelapp.com",
-      "path": "/",
-      "expires": 1793257952,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "None"
+      "sameSite": "Lax"
     }
   ],
   "origins": []
