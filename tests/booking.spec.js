@@ -4,6 +4,7 @@ const bookData = require('../test_Data/bookData.json');
 const appConfig = require('../test_Data/appConfig.json');
 import SearchPage from '../pages/Searchpage';
 import BookPage from '../pages/BookPage';
+import LoginPage from '../pages/LoginPage';
 import { attachStepScreenshot } from '../utils/screenshot';
 
 test.describe('Adactin Hotel - ', () => {
@@ -12,10 +13,12 @@ test.describe('Adactin Hotel - ', () => {
     const sData = searchData.validSearches[0];
 
     test.beforeEach(async ({ page }) => {
+        const loginPage = new LoginPage(page);
         searchPage = new SearchPage(page);
         bookPage = new BookPage(page);
 
-        await page.goto(appConfig.urls.expectedSearchURL);
+        await loginPage.goto();
+        await loginPage.login(process.env.USERNAME, process.env.PASSWORD);
         await expect(page).toHaveURL(new URL(appConfig.urls.expectedSearchURL, process.env.BASE_URL).href, { timeout: 90000 });
 
         await searchPage.searchHotel(sData);
