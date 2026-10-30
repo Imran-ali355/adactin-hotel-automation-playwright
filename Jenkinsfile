@@ -43,8 +43,8 @@ pipeline {
         }
     }
 
-    post {
-      always {
+ post {
+    always {
         publishHTML(target: [
             allowMissing: false,
             alwaysLinkToLastBuild: true,
@@ -54,5 +54,19 @@ pipeline {
             reportName: 'Playwright HTML Report'
         ])
     }
+    success {
+        step([$class: 'GitHubCommitStatusSetter', 
+              reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/Imran-ali355/adactin-hotel-automation-playwright'], 
+              commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: env.GIT_COMMIT], 
+              statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'Success', state: 'SUCCESS']]], 
+              context: [name: 'Jenkins CI']])
     }
+    failure {
+        step([$class: 'GitHubCommitStatusSetter', 
+              reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/Imran-ali355/adactin-hotel-automation-playwright'], 
+              commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: env.GIT_COMMIT], 
+              statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'Failure', state: 'FAILURE']]], 
+              context: [name: 'Jenkins CI']])
+    }
+}
 }
