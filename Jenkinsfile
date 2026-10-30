@@ -44,9 +44,15 @@ pipeline {
     }
 
     post {
-        always {
-            // Yeh block test khatam hone ke baad HTML report ko Jenkins par save (archive) karega
-            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
-        }
+      always {
+        publishHTML(target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: true,
+            keepAll: true,
+            reportDir: 'playwright-report',
+            reportFiles: 'index.html',
+            reportName: 'Playwright HTML Report'
+        ])
+    }
     }
 }
