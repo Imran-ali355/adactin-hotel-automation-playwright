@@ -2,25 +2,28 @@ pipeline {
     agent any
 
     environment {
-        BASE_URL = 'https://adactinhotelapp.com/HotelAppBuild2/'
-        USERNAME = 'imranali'
-        PASSWORD = 'imranali'
+        CI = 'true'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Imran-ali355/adactin-hotel-automation-playwright.git'
+                checkout scm
             }
         }
 
-        stage('Create .env File') {
+        stage('Setup Environment Variables') {
             steps {
-                sh '''
-                    echo "BASE_URL=${BASE_URL}" > .env
-                    echo "USERNAME=${USERNAME}" >> .env
-                    echo "PASSWORD=${PASSWORD}" >> .env
-                '''
+                withCredentials([
+                    string(credentialsId: 'ADACTIN_USERNAME', variable: 'ENV_USER'),
+                    string(credentialsId: 'ADACTIN_PASSWORD', variable: 'ENV_PASS')
+                ]) {
+                    sh '''
+                        echo "BASE_URL=https://adactinapp.com/HotelAppBuild2/" > .env
+                        echo "USERNAME=${ENV_USER}" >> .env
+                        echo "PASSWORD=${ENV_PASS}" >> .env
+                    '''
+                }
             }
         }
 
@@ -32,41 +35,21 @@ pipeline {
 
         stage('Install Playwright Browsers') {
             steps {
-                sh 'npx playwright install'
+                sh 'npx playwright install --with-deps'
             }
         }
 
-        stage('Run Playwright Tests') {
+        stage('Execute Playwright Tests') {
             steps {
                 sh 'npx playwright test'
             }
         }
     }
 
- post {
-    always {
-        publishHTML(target: [
-            allowMissing: false,
-            alwaysLinkToLastBuild: true,
-            keepAll: true,
-            reportDir: 'playwright-report',
-            reportFiles: 'index.html',
-            reportName: 'Playwright HTML Report'
-        ])
+    post {
+        always {
+            sh 'rm -f .env'
+            archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
+        }
     }
-    success {
-        step([$class: 'GitHubCommitStatusSetter', 
-              reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/Imran-ali355/adactin-hotel-automation-playwright'], 
-              commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: env.GIT_COMMIT], 
-              statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'Success', state: 'SUCCESS']]], 
-              context: [name: 'Jenkins CI']])
-    }
-    failure {
-        step([$class: 'GitHubCommitStatusSetter', 
-              reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/Imran-ali355/adactin-hotel-automation-playwright'], 
-              commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: env.GIT_COMMIT], 
-              statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'Failure', state: 'FAILURE']]], 
-              context: [name: 'Jenkins CI']])
-    }
-}
 }
