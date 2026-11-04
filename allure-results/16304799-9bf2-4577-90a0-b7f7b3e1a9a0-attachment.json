@@ -1,0 +1,4 @@
+{
+  "status": 404,
+  "response": "{\"statusCode\":404,\"success\":false,\"message\":\"Can't find /api/v1/users/invalid-endpoint on the server\",\"errors\":[]}"
+}

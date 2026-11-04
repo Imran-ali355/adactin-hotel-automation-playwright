@@ -1,0 +1,4 @@
+Username received: true
+Password received: true
+Current URL after login: https://adactinhotelapp.com/HotelAppBuild2/
+Authentication error: Invalid Login details or Your Password might have expired. Click here to reset your password

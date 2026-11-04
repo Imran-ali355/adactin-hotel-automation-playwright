@@ -1,0 +1,6 @@
+Screenshot failed for "Hotel search submitted": page.screenshot: Timeout 15000ms exceeded.
+Call log:
+  - taking page screenshot
+  - waiting for fonts to load...
+  - fonts loaded
+

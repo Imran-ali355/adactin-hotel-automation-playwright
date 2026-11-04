@@ -1,0 +1,4 @@
+Username received: true
+Password received: true
+Current URL after login: https://adactinhotelapp.com/HotelAppBuild2/SearchHotel.php
+Authentication error: No auth error found

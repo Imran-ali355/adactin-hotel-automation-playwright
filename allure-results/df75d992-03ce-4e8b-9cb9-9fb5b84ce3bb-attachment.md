@@ -1,0 +1,154 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: API\patch.spec.js >> Reject PATCH account with an invalid email
+- Location: tests\API\patch.spec.js:81:5
+
+# Error details
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 404
+```
+
+# Test source
+
+```ts
+  1   | import { test, expect } from '@playwright/test';
+  2   | import { ApiService, API_BASE_URL } from '../../services/api-service.js';
+  3   | import { AuthService } from '../../services/auth-service.js';
+  4   | import { UserService } from '../../services/user-service.js';
+  5   | import { createTestUser } from './test-user.js';
+  6   | 
+  7   | async function loginTestUser(request) {
+  8   |   const api = new ApiService(request);
+  9   |   const users = new UserService(api);
+  10  |   const auth = new AuthService(api);
+  11  |   const user = createTestUser();
+  12  | 
+  13  |   const registration = await users.register(user);
+  14  |   expect(registration.status()).toBe(201);
+  15  | 
+  16  |   const login = await auth.login(user);
+  17  |   expect(login.status()).toBe(200);
+  18  | 
+  19  |   return api;
+  20  | }
+  21  | 
+  22  | test('PATCH account with a new full name', async ({ request }) => {
+  23  |   const api = await loginTestUser(request);
+  24  |   const response = await api.request.patch(`${API_BASE_URL}/users/replace-account`, {
+  25  |     data: { fullname: 'Updated Playwright User' }
+  26  |   });
+  27  | 
+  28  |   expect(response.status()).toBe(200);
+  29  | });
+  30  | 
+  31  | test('PATCH account with a new email', async ({ request }) => {
+  32  |   const api = await loginTestUser(request);
+  33  |   const response = await api.request.patch(`${API_BASE_URL}/users/replace-account`, {
+  34  |     data: { email: `updated-${createTestUser().email}` }
+  35  |   });
+  36  | 
+  37  |   expect(response.status()).toBe(200);
+  38  | });
+  39  | 
+  40  | test('PATCH account with a new username', async ({ request }) => {
+  41  |   const api = await loginTestUser(request);
+  42  |   const response = await api.request.patch(`${API_BASE_URL}/users/replace-account`, {
+  43  |     data: { username: `updated_${createTestUser().username}` }
+  44  |   });
+  45  | 
+  46  |   expect(response.status()).toBe(200);
+  47  | });
+  48  | 
+  49  | test('PATCH account with multiple fields', async ({ request }) => {
+  50  |   const api = await loginTestUser(request);
+  51  |   const user = createTestUser();
+  52  |   const response = await api.request.patch(`${API_BASE_URL}/users/replace-account`, {
+  53  |     data: {
+  54  |       fullname: 'Updated Playwright User',
+  55  |       email: user.email,
+  56  |       username: user.username
+  57  |     }
+  58  |   });
+  59  | 
+  60  |   expect(response.status()).toBe(200);
+  61  | });
+  62  | 
+  63  | test('Require login to PATCH an account', async ({ request }) => {
+  64  |   const api = new ApiService(request);
+  65  |   const response = await api.request.patch(`${API_BASE_URL}/users/replace-account`, {
+  66  |     data: { fullname: 'Updated Playwright User' }
+  67  |   });
+  68  | 
+  69  |   expect(response.status()).toBe(401);
+  70  | });
+  71  | 
+  72  | test('Reject PATCH account with an empty body', async ({ request }) => {
+  73  |   const api = await loginTestUser(request);
+  74  |   const response = await api.request.patch(`${API_BASE_URL}/users/replace-account`, {
+  75  |     data: {}
+  76  |   });
+  77  | 
+  78  |   expect(response.status()).toBe(400);
+  79  | });
+  80  | 
+  81  | test('Reject PATCH account with an invalid email', async ({ request }) => {
+  82  |   const api = await loginTestUser(request);
+  83  |   const response = await api.request.patch(`${API_BASE_URL}/users/replace-account`, {
+  84  |     data: { email: 'invalid-email' }
+  85  |   });
+  86  | 
+> 87  |   expect(response.status()).toBe(400);
+      |                             ^ Error: expect(received).toBe(expected) // Object.is equality
+  88  | });
+  89  | 
+  90  | test('Reject PATCH account with an email already in use', async ({ request }) => {
+  91  |   const api = new ApiService(request);
+  92  |   const users = new UserService(api);
+  93  |   const auth = new AuthService(api);
+  94  |   const user = createTestUser();
+  95  |   const existingUser = createTestUser();
+  96  | 
+  97  |   const userRegistration = await users.register(user);
+  98  |   expect(userRegistration.status()).toBe(201);
+  99  |   const existingUserRegistration = await users.register(existingUser);
+  100 |   expect(existingUserRegistration.status()).toBe(201);
+  101 | 
+  102 |   const login = await auth.login(user);
+  103 |   expect(login.status()).toBe(200);
+  104 | 
+  105 |   const response = await api.request.patch(`${API_BASE_URL}/users/replace-account`, {
+  106 |     data: { email: existingUser.email }
+  107 |   });
+  108 | 
+  109 |   expect(response.status()).toBe(409);
+  110 | });
+  111 | 
+  112 | test('Reject PATCH to an unknown account endpoint', async ({ request }) => {
+  113 |   const api = new ApiService(request);
+  114 |   const response = await api.request.patch(`${API_BASE_URL}/users/invalid-patch-endpoint`, {
+  115 |     data: { fullname: 'Updated Playwright User' }
+  116 |   });
+  117 | 
+  118 |   expect(response.status()).toBe(404);
+  119 | });
+  120 | 
+  121 | test('Reject PATCH account with malformed JSON', async ({ request }) => {
+  122 |   const api = await loginTestUser(request);
+  123 |   const response = await api.request.patch(`${API_BASE_URL}/users/replace-account`, {
+  124 |     data: 'not-json',
+  125 |     headers: { 'Content-Type': 'application/json' }
+  126 |   });
+  127 | 
+  128 |   expect(response.status()).toBe(400);
+  129 | });
+```
