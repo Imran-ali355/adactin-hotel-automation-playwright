@@ -1,0 +1,4 @@
+{
+  "status": 409,
+  "response": "{\"statusCode\":409,\"success\":false,\"message\":\"User already exists\",\"errors\":[]}"
+}

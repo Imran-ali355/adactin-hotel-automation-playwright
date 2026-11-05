@@ -1,0 +1,4 @@
+{
+  "status": 201,
+  "response": "{\"statusCode\":201,\"data\":{\"_id\":\"6aeaec653d8f55175d3d89e0\",\"username\":\"pw_a57a443130584f17b9dc81906223c13a\",\"email\":\"playwright-a57a443130584f17b9dc81906223c13a@example.com\",\"fullname\":\"Playwright a57a443130584f17b9dc81906223c13a\",\"createdAt\":\"2026-11-04T08:27:17.414Z\",\"updatedAt\":\"2026-11-04T08:27:17.414Z\",\"__v\":0},\"message\":\"User registered Successfully\",\"success\":true}"
+}

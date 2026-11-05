@@ -2,7 +2,7 @@ import { test as setup, expect } from '@playwright/test';
 import LoginPage from '../pages/LoginPage';
 import appConfig from '../test_Data/appConfig.json';
 import { attachStepScreenshot } from '../utils/screenshot';
-
+// state
 setup('authenticate', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();

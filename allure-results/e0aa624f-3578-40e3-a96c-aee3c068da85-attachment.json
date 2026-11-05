@@ -1,0 +1,4 @@
+{
+  "status": 200,
+  "response": "{\"statusCode\":200,\"data\":{\"_id\":\"6aeaeaa93d8f55175d3d89c8\",\"username\":\"updated_pw_2dd837fea8404ea3b29ddb1111414540\",\"email\":\"updated-playwright-2dd837fea8404ea3b29ddb1111414540@example.com\",\"fullname\":\"Updated User\",\"createdAt\":\"2026-11-04T08:19:53.963Z\",\"updatedAt\":\"2026-11-04T08:19:56.340Z\",\"__v\":0,\"refreshToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YWVhZWFhOTNkOGY1NTE3NWQzZDg5YzgiLCJlbWFpbCI6InBsYXl3cmlnaHQtMmRkODM3ZmVhODQwNGVhM2IyOWRkYjExMTE0MTQ1NDBAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6IlBsYXl3cmlnaHQgMmRkODM3ZmVhODQwNGVhM2IyOWRkYjExMTE0MTQ1NDAiLCJpYXQiOjE3OTM3ODAzOTUsImV4cCI6MTc5NDY0NDM5NX0.ys7R8A2WVtMHs2cQS7shSQ19m0AxS71PlswgCDDWkB8\"},\"message\":\"User details replaced successfully\",\"success\":true}"
+}
