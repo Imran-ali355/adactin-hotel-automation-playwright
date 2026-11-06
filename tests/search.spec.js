@@ -20,7 +20,7 @@ test.describe('Adactin Hotel - Booking Tests', () => {
         await test.step('Navigate to Search URL and perform search to reach Book Page', async () => {
             await loginPage.goto();
             await loginPage.login(process.env.USERNAME, process.env.PASSWORD);
-            await expect(page).toHaveURL(new URL(appConfig.urls.expectedSearchURL, process.env.BASE_URL).href, { timeout: 90000 });
+            await expect(page).toHaveURL(new URL(appConfig.urls.expectedSearchURL, process.env.BASE_URL).href, { timeout: appConfig.timeouts.searchReady });
             await searchPage.searchHotel(sData);
             await expect(page).toHaveURL(new URL(appConfig.urls.expectedSelectURL, process.env.BASE_URL).href);
 
@@ -31,7 +31,7 @@ test.describe('Adactin Hotel - Booking Tests', () => {
     test.afterEach(async ({ page }) => {
         try {
             const logout = new LogoutPage(page);
-            if (await logout.logoutLink.isVisible({ timeout: 2000 })) {
+            if (await logout.logoutLink.isVisible({ timeout: appConfig.timeouts.logoutVisibility })) {
                 await logout.gotoLogoutPage();
             }
         } catch (error) {
@@ -49,14 +49,14 @@ test.describe('Adactin Hotel - Booking Tests', () => {
         });
 
         await test.step('Verify successful booking confirmation and order number', async () => {
-            await expect(page).toHaveURL(new URL(appConfig.urls.expectedConfirmURL, process.env.BASE_URL).href, { timeout: 150000 });
-            await expect(bookPage.orderNo).not.toHaveValue('');
+            await expect(page).toHaveURL(new URL(appConfig.urls.expectedConfirmURL, process.env.BASE_URL).href, { timeout: appConfig.timeouts.bookingConfirmation });
+            await expect(bookPage.orderNo).not.toHaveValue(bookData.formDefaults.emptyValue);
             await attachStepScreenshot(page, 'Booking confirmed');
         });
     });
 
     test('TC-015. Verify Error Message when First Name is Empty', async ({ page }) => {
-        const bData = { ...bookData.booking[0], firstname: '' };
+        const bData = { ...bookData.booking[0], firstname: bookData.invalid.emptyFirstName };
         const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
 
         await test.step('Book hotel with empty first name', async () => {
@@ -70,7 +70,7 @@ test.describe('Adactin Hotel - Booking Tests', () => {
     });
 
     test('TC-016. Verify Error Message when Last Name is Empty', async ({ page }) => {
-        const bData = { ...bookData.booking[0], lastname: '' };
+        const bData = { ...bookData.booking[0], lastname: bookData.invalid.emptyLastName };
         const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
 
         await test.step('Book hotel with empty last name', async () => {
@@ -84,7 +84,7 @@ test.describe('Adactin Hotel - Booking Tests', () => {
     });
 
     test('TC-017. Verify Error Message with Invalid Credit Card Number', async ({ page }) => {
-        const bData = { ...bookData.booking[0], creditcardnumber: '12345' };
+        const bData = { ...bookData.booking[0], creditcardnumber: bookData.invalid.shortCreditCardNumber };
         const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
 
         await test.step('Book hotel with invalid credit card number', async () => {
@@ -92,17 +92,17 @@ test.describe('Adactin Hotel - Booking Tests', () => {
         });
 
         await test.step('Verify credit card error message text', async () => {
-            await expect(bookPage.ccNumError).toContainText('Please Enter your 16 Digit Credit Card Number');
+            await expect(bookPage.ccNumError).toContainText(bookData.invalid.creditCardError);
             await attachStepScreenshot(page, 'Credit card validation displayed');
         });
     });
 
     test('TC-018. Verify Hotel Summary Details are Displayed on Booking Page', async ({ page }) => {
         await test.step('Verify hotel summary fields are populated', async () => {
-            await expect(bookPage.hotelName).not.toHaveValue('');
-            await expect(bookPage.location).not.toHaveValue('');
-            await expect(bookPage.roomNumber).not.toHaveValue('');
-            await expect(bookPage.totalPrice).not.toHaveValue('');
+            await expect(bookPage.hotelName).not.toHaveValue(bookData.formDefaults.emptyValue);
+            await expect(bookPage.location).not.toHaveValue(bookData.formDefaults.emptyValue);
+            await expect(bookPage.roomNumber).not.toHaveValue(bookData.formDefaults.emptyValue);
+            await expect(bookPage.totalPrice).not.toHaveValue(bookData.formDefaults.emptyValue);
             await attachStepScreenshot(page, 'Hotel summary verified');
         });
     });
@@ -128,4 +128,30 @@ test.describe('Adactin Hotel - Booking Tests', () => {
             await attachStepScreenshot(page, 'Logout verified');
         });
     });
+
+    test('Verify selected hotel details match search data', async () => {
+        await expect(bookPage.hotelName).toHaveValue(sData.hotels);
+        await expect(bookPage.location).toHaveValue(sData.location);
+    });
+
+    test('Verify booking form fields start with configured defaults', async () => {
+        await expect(bookPage.firstName).toHaveValue(bookData.formDefaults.firstname);
+        await expect(bookPage.lastName).toHaveValue(bookData.formDefaults.lastname);
+        await expect(bookPage.address).toHaveValue(bookData.formDefaults.billingaddress);
+        await expect(bookPage.ccNum).toHaveValue(bookData.formDefaults.creditcardnumber);
+        await expect(bookPage.cvv).toHaveValue(bookData.formDefaults.cvv);
+    });
+
+    test('Cancel returns to the configured hotel results page', async ({ page }) => {
+        await bookPage.cancelBooking();
+
+        await expect(page).toHaveURL(new URL(appConfig.urls.expectedSelectURL, process.env.BASE_URL).href);
+    });
+
+    test('Logout returns to the configured index page', async ({ page }) => {
+        await bookPage.logoutAndReturn();
+
+        await expect(page).toHaveURL(new URL(appConfig.urls.expectedindexURL, process.env.BASE_URL).href);
+    });
+
 });

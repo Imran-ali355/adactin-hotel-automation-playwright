@@ -19,7 +19,7 @@ test.describe('Adactin Hotel - ', () => {
 
         await loginPage.goto();
         await loginPage.login(process.env.USERNAME, process.env.PASSWORD);
-        await expect(page).toHaveURL(new URL(appConfig.urls.expectedSearchURL, process.env.BASE_URL).href, { timeout: 90000 });
+        await expect(page).toHaveURL(new URL(appConfig.urls.expectedSearchURL, process.env.BASE_URL).href, { timeout: appConfig.timeouts.searchReady });
 
         await searchPage.searchHotel(sData);
 
@@ -31,7 +31,7 @@ test.describe('Adactin Hotel - ', () => {
     test.afterEach(async ({ page }) => {
         try {
             const logout = new LogoutPage(page);
-            if (await logout.logoutLink.isVisible({ timeout: 2000 })) {
+            if (await logout.logoutLink.isVisible({ timeout: appConfig.timeouts.logoutVisibility })) {
                 await logout.gotoLogoutPage();
             }
         } catch (error) {
@@ -45,10 +45,10 @@ test.describe('Adactin Hotel - ', () => {
         const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
 
         await bookPage.bookHotel(bData, expiryMonth, fullExpiryYear);
-        await expect(page).toHaveURL(new URL(appConfig.urls.expectedConfirmURL, process.env.BASE_URL).href, { timeout: 150000 });
+        await expect(page).toHaveURL(new URL(appConfig.urls.expectedConfirmURL, process.env.BASE_URL).href, { timeout: appConfig.timeouts.bookingConfirmation });
 
         await test.step('Verify booking confirmation', async () => {
-            await expect(bookPage.orderNo).not.toHaveValue('');
+            await expect(bookPage.orderNo).not.toHaveValue(bookData.formDefaults.emptyValue);
             await attachStepScreenshot(page, 'Booking confirmed');
         });
     });
@@ -57,7 +57,7 @@ test.describe('Adactin Hotel - ', () => {
 
     test('TC-015. Verify Error Message when First Name is Empty', async ({ page }) => {
 
-        const bData = { ...bookData.booking[0], firstname: '' };
+        const bData = { ...bookData.booking[0], firstname: bookData.invalid.emptyFirstName };
         const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
 
         await bookPage.bookHotel(bData, expiryMonth, fullExpiryYear);
@@ -70,7 +70,7 @@ test.describe('Adactin Hotel - ', () => {
 
 
     test('TC-016. Verify Error Message when Last Name is Empty', async ({ page }) => {
-        const bData = { ...bookData.booking[0], lastname: '' };
+        const bData = { ...bookData.booking[0], lastname: bookData.invalid.emptyLastName };
         const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
 
         await bookPage.bookHotel(bData, expiryMonth, fullExpiryYear);
@@ -83,13 +83,13 @@ test.describe('Adactin Hotel - ', () => {
 
 
     test('TC-017. Verify Error Message with Invalid Credit Card Number', async ({ page }) => {
-        const bData = { ...bookData.booking[0], creditcardnumber: '12345' };
+        const bData = { ...bookData.booking[0], creditcardnumber: bookData.invalid.shortCreditCardNumber };
         const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
 
         await bookPage.bookHotel(bData, expiryMonth, fullExpiryYear);
 
         await test.step('Verify credit card validation', async () => {
-            await expect(bookPage.ccNumError).toContainText('Please Enter your 16 Digit Credit Card Number');
+            await expect(bookPage.ccNumError).toContainText(bookData.invalid.creditCardError);
             await attachStepScreenshot(page, 'Credit card validation displayed');
         });
     });
@@ -104,6 +104,43 @@ test.describe('Adactin Hotel - ', () => {
     });
 
 
+
+    test('TC-021. Verify Error Message when Credit Card Number is Empty', async ({ page }) => {
+        const bData = { ...bookData.booking[0], creditcardnumber: bookData.invalid.emptyCreditCardNumber };
+        const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
+
+        await bookPage.bookHotel(bData, expiryMonth, fullExpiryYear);
+
+        await expect(bookPage.ccNumError).toContainText(bookData.invalid.creditCardError);
+    });
+
+    test('TC-022. Verify Error Message when CVV is Empty', async ({ page }) => {
+        const bData = { ...bookData.booking[0], cvv: bookData.invalid.emptyCvv };
+        const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
+
+        await bookPage.bookHotel(bData, expiryMonth, fullExpiryYear);
+
+        await expect(bookPage.ccCvvError).toContainText(bookData.invalid.cvvError);
+    });
+
+    test('TC-023. Verify Booking Completes with Valid CVV', async ({ page }) => {
+        const bData = bookData.booking[0];
+        const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
+
+        await bookPage.bookHotel(bData, expiryMonth, fullExpiryYear);
+
+        await expect(page).toHaveURL(new URL(appConfig.urls.expectedConfirmURL, process.env.BASE_URL).href, { timeout: appConfig.timeouts.bookingConfirmation });
+        await expect(bookPage.orderNo).not.toHaveValue(bookData.formDefaults.emptyValue);
+    });
+
+    test('TC-024. Verify Error Message when Billing Address is Empty', async ({ page }) => {
+        const bData = { ...bookData.booking[0], billingaddress: bookData.invalid.emptyBillingAddress };
+        const [expiryMonth, fullExpiryYear] = bData.expirydate.split('/');
+
+        await bookPage.bookHotel(bData, expiryMonth, fullExpiryYear);
+
+        await expect(bookPage.addressError).toContainText(bookData.invalid.billingAddressError);
+    });
 
     test.skip('TC-020. Verify User can Logout directly from Booking Page', async ({ page }) => {
         await bookPage.logoutAndReturn();

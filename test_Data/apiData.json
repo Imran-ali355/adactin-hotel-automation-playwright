@@ -1,0 +1,113 @@
+{
+  "expected": {
+    "createdStatus": 201,
+    "successStatus": 200,
+    "badRequestStatus": 400,
+    "unauthorizedStatus": 401,
+    "notFoundStatus": 404,
+    "conflictStatus": 409,
+    "unsupportedMethodStatuses": [404, 405],
+    "minimumUsers": 1,
+    "usersContentType": "application/json",
+    "requiredUserFields": ["_id", "email", "username"]
+  },
+  "user": {
+    "fullnamePrefix": "Playwright ",
+    "emailPrefix": "playwright-",
+    "emailDomain": "@example.com",
+    "usernamePrefix": "pw_",
+    "password": "Password123!"
+  },
+  "login": {
+    "wrongPassword": "WrongPassword999!",
+    "missingUsername": {
+      "email": "haristester@example.com",
+      "password": "Password123!",
+      "expectedStatus": 404
+    },
+    "missingEmail": {
+      "username": "haristester",
+      "password": "Password123!",
+      "expectedStatus": 401
+    },
+    "missingPassword": {
+      "email": "haristester@example.com",
+      "username": "haristester"
+    },
+    "unregisteredEmailPrefix": "unregistered-",
+    "unregisteredUsernamePrefix": "unregistered_",
+    "unregisteredExpectedStatus": 404
+  },
+  "registration": {
+    "missingPassword": {
+      "fullname": "Playwright User",
+      "email": "missing-password@example.com",
+      "username": "missing_password"
+    },
+    "listEndpointPost": {
+      "name": "Test User"
+    },
+    "missingFullname": {
+      "email": "missing-fullname@example.com",
+      "username": "missing_fullname",
+      "password": "Password123!"
+    },
+    "missingEmail": {
+      "fullname": "Playwright User",
+      "username": "missing_email",
+      "password": "Password123!"
+    },
+    "missingUsername": {
+      "fullname": "Playwright User",
+      "email": "missing-username@example.com",
+      "password": "Password123!"
+    },
+    "invalidEmail": {
+      "fullname": "Playwright User",
+      "email": "invalid-email-format",
+      "username": "invalid_email",
+      "password": "Password123!"
+    }
+  },
+  "update": {
+    "missingFullname": {
+      "email": "incomplete@example.com",
+      "username": "incompleteUser"
+    },
+    "missingEmail": {
+      "fullname": "Updated User",
+      "username": "updatedUser"
+    },
+    "missingUsername": {
+      "fullname": "Updated User",
+      "email": "updateduser@example.com"
+    },
+    "empty": {},
+    "invalidEmail": {
+      "fullname": "Updated User",
+      "email": "invalid-email",
+      "username": "updatedUser"
+    }
+  },
+  "accountUpdate": {
+    "fullname": "Updated Playwright User",
+    "emailPrefix": "updated-",
+    "usernamePrefix": "updated_",
+    "valid": {
+      "fullname": "Updated User",
+      "email": "updateduser@example.com",
+      "username": "updatedUser"
+    }
+  },
+  "headers": {
+    "malformedAuthorization": "******"
+  },
+  "patch": {
+    "fullname": {
+      "fullname": "Updated Playwright User"
+    },
+    "empty": {},
+    "emptyField": "",
+    "malformedBody": "not-json"
+  }
+}

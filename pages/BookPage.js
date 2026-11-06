@@ -66,6 +66,7 @@ class BookPage {
         this.indexLink = page.locator('a[href="index.php"]');
         this.firstNameError = page.locator('#first_name_span');
         this.lastNameError = page.locator('#last_name_span');
+        this.addressError = page.locator('#address_span');
         this.ccNumError = page.locator('#cc_num_span');
         this.ccCvvError = page.locator('#cc_cvv_span');
         this.hotelName = page.locator('#hotel_name_dis');

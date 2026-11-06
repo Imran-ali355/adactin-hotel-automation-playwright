@@ -5,8 +5,8 @@
       "hotels": "Hotel Creek",
       "roomType": "Standard",
       "roomNos": "1 - One",
-      "dateIn": "05/11/2026",
-      "dateOut": "10/11/2026",
+      "dateIn": "20/11/2026",
+      "dateOut": "25/11/2026",
       "adults": "2 - Two",
       "children": "1 - One"
     },
@@ -33,5 +33,9 @@
       "children": "0 - None",
       "errorMsg": "Check-In Date shall be before than Check-Out Date"
     }
-  ]
+  ],
+  "confirmation": {
+    "message": "Booking Confirmation",
+    "emptyValue": ""
+  }
 }

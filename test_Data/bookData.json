@@ -10,5 +10,24 @@
       "cvv": "123",
       "expectedConfirmURL": "BookingConfirm.php"
     }
-  ]
+  ],
+  "formDefaults": {
+    "firstname": "",
+    "lastname": "",
+    "billingaddress": "",
+    "creditcardnumber": "",
+    "cvv": "",
+    "emptyValue": ""
+  },
+  "invalid": {
+    "emptyFirstName": "",
+    "emptyLastName": "",
+    "shortCreditCardNumber": "12345",
+    "emptyCreditCardNumber": "",
+    "emptyBillingAddress": "",
+    "emptyCvv": "",
+    "creditCardError": "Please Enter your 16 Digit Credit Card Number",
+    "cvvError": "Please Enter your Credit Card CVV Number",
+    "billingAddressError": "Please Enter your Address"
+  }
 }

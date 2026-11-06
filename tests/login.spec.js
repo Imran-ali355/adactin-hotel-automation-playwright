@@ -91,4 +91,32 @@ test.describe('Adactin Hotel - Login Tests ', () => {
             await attachStepScreenshot(page, 'Successful login verified');
         });
     });
+
+    test('TC-008. Should show the username error when only a password is provided', async ({ page }) => {
+        await loginPage.login(
+            loginData.additional.passwordOnly.username,
+            loginData.additional.passwordOnly.password
+        );
+
+        await expect(loginPage.usernameErrorSpan).toContainText(loginData.validation.usernameRequired);
+    });
+
+    test('TC-009. Should reject a username containing whitespace', async ({ page }) => {
+        const credentials = loginData.additional.whitespaceUsername;
+        await loginPage.login(credentials.username, credentials.password);
+
+        await expect(loginPage.authError).toContainText(loginData.validation.invalidCredentials);
+    });
+
+    test('TC-010. Should reject an unregistered username', async ({ page }) => {
+        const credentials = loginData.additional.unregistered;
+        await loginPage.login(credentials.username, credentials.password);
+
+        await expect(loginPage.authError).toContainText(loginData.validation.invalidCredentials);
+    });
+
+    test('TC-011. Verify login form input types', async () => {
+        await expect(loginPage.usernameInput).toHaveAttribute('type', loginData.form.usernameInputType);
+        await expect(loginPage.passwordInput).toHaveAttribute('type', loginData.form.passwordInputType);
+    });
 });

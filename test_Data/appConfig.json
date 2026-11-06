@@ -7,5 +7,10 @@
     "expectedItineraryURL": "BookedItinerary.php",
     "expectedLogoutURL": "Logout.php",
     "expectedindexURL": "index.php"
+  },
+  "timeouts": {
+    "searchReady": 90000,
+    "bookingConfirmation": 150000,
+    "logoutVisibility": 2000
   }
 }

@@ -25,12 +25,12 @@ test.describe('Adactin Hotel - Booking Confirmation Tests', () => {
         await searchPage.searchHotel(search);
         await searchPage.selectAndContinue();
         await bookPage.bookHotel(booking, expiryMonth, expiryYear);
-        await expect(page).toHaveURL(new URL(appConfig.urls.expectedConfirmURL, process.env.BASE_URL).href, { timeout: 150000 });
+        await expect(page).toHaveURL(new URL(appConfig.urls.expectedConfirmURL, process.env.BASE_URL).href, { timeout: appConfig.timeouts.bookingConfirmation });
     });
     test.afterEach(async ({ page }) => {
         try {
             const logout = new LogoutPage(page);
-            if (await logout.logoutLink.isVisible({ timeout: 2000 })) {
+            if (await logout.logoutLink.isVisible({ timeout: appConfig.timeouts.logoutVisibility })) {
                 await logout.gotoLogoutPage();
             }
         } catch (error) {
@@ -41,7 +41,7 @@ test.describe('Adactin Hotel - Booking Confirmation Tests', () => {
 
     test('TC-021. Verify booking order number is generated', async ({ page }) => {
         await test.step('Verify order number', async () => {
-            await expect(confirmationPage.orderNoInput).not.toHaveValue('');
+            await expect(confirmationPage.orderNoInput).not.toHaveValue(bookData.formDefaults.emptyValue);
             await attachStepScreenshot(page, 'Order number verified');
         });
     });
@@ -60,5 +60,25 @@ test.describe('Adactin Hotel - Booking Confirmation Tests', () => {
             await expect(confirmationPage.roomType).toHaveValue(search.roomType);
             await attachStepScreenshot(page, 'Hotel booking details verified');
         });
+    });
+
+    test('Verify the booking confirmation title from test data', async () => {
+        await expect(confirmationPage.confirmationMessage).toHaveText(searchData.confirmation.message);
+    });
+
+    test('Verify room count is present in the booking confirmation', async () => {
+        await expect(confirmationPage.roomCount).not.toHaveValue(searchData.confirmation.emptyValue);
+    });
+
+    test('Return to the configured hotel search page', async ({ page }) => {
+        await confirmationPage.clickSearch();
+
+        await expect(page).toHaveURL(new URL(appConfig.urls.expectedSearchURL, process.env.BASE_URL).href);
+    });
+
+    test('Open the configured itinerary page from the confirmation', async ({ page }) => {
+        await confirmationPage.clickMyItinerary();
+
+        await expect(page).toHaveURL(new URL(appConfig.urls.expectedItineraryURL, process.env.BASE_URL).href);
     });
 });

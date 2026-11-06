@@ -8,6 +8,10 @@
     "forgotPasswordURL": "ForgotPassword.php",
     "registerURL": "Register.php"
   },
+  "form": {
+    "usernameInputType": "text",
+    "passwordInputType": "password"
+  },
   "invalid": [
     {
       "username": "WrongUser_999",
@@ -21,5 +25,19 @@
       "username": "' OR '1'='1",
       "password": "' OR '1'='1"
     }
-  ]
+  ],
+  "additional": {
+    "passwordOnly": {
+      "username": "",
+      "password": "Password123!"
+    },
+    "whitespaceUsername": {
+      "username": "   ",
+      "password": "Password123!"
+    },
+    "unregistered": {
+      "username": "UnregisteredUser_654321",
+      "password": "Password123!"
+    }
+  }
 }

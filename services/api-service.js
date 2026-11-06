@@ -20,6 +20,10 @@ export class ApiService {
     return this.request.put(`${API_BASE_URL}${path}`, { ...options, data });
   }
 
+  patch(path, data, options = {}) {
+    return this.request.patch(`${API_BASE_URL}${path}`, { ...options, data });
+  }
+
   delete(path, options = {}) {
     return this.request.delete(`${API_BASE_URL}${path}`, options);
   }

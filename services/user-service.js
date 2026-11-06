@@ -27,6 +27,20 @@ export class UserService {
     return this.api.put('/users/replace-account', user);
   }
 
+  patchAccount(user) {
+    return this.api.patch('/users/replace-account', user);
+  }
+
+  patchAccountMalformed(body, contentType) {
+    return this.api.patch('/users/replace-account', body, {
+      headers: { 'Content-Type': contentType }
+    });
+  }
+
+  patchUnknownAccount(user) {
+    return this.api.patch('/users/invalid-patch-endpoint', user);
+  }
+
   replaceUnknownAccount(user) {
     return this.api.put('/users/invalid-replace-endpoint', user);
   }

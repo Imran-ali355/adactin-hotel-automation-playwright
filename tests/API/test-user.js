@@ -1,11 +1,12 @@
 import { randomUUID } from 'node:crypto';
+import apiData from '../../test_Data/apiData.json';
 
 export function createTestUser() {
   const id = randomUUID().replaceAll('-', '');
   return {
-    fullname: `Playwright ${id}`,
-    email: `playwright-${id}@example.com`,
-    username: `pw_${id}`,
-    password: 'Password123!'
+    fullname: `${apiData.user.fullnamePrefix}${id}`,
+    email: `${apiData.user.emailPrefix}${id}${apiData.user.emailDomain}`,
+    username: `${apiData.user.usernamePrefix}${id}`,
+    password: apiData.user.password
   };
 }

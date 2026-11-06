@@ -1,0 +1,4 @@
+{
+  "status": 400,
+  "response": "{\"statusCode\":400,\"success\":false,\"message\":\"Password is required\",\"errors\":[]}"
+}
