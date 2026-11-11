@@ -351,6 +351,11 @@ Keep locators in page objects, endpoint calls in services, and scenario assertio
 
 ---
 
+## AI-assisted PR review
+
+QA Orbit is being configured to review pull requests.
+AI feedback should be checked by a human before merging.
+
 <div align="center">
 
 <h3>👨‍💻 Built by Imran Ali</h3>
